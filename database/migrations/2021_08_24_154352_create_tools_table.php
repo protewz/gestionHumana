@@ -14,7 +14,7 @@ class CreateToolsTable extends Migration
     public function up()
     {
         Schema::create('tools', function (Blueprint $table) {
-            $table->id();
+            $table->id();          
             $table->foreignId('id_employee')->constrained('employees');
             $table->Date('Loan_Date');
             $table->Date('Return_Date');

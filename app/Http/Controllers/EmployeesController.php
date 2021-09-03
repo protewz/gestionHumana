@@ -41,7 +41,7 @@ class EmployeesController extends Controller
     $Emp->Date_Birth = $request->Date_Birth;
     $Emp->Post = $request->Post;
     $Emp->Date_Admission = $request->Date_Admission;
-    $Emp->Date_Rretirement = $request->Date_Retirement;
+    $Emp->Date_Retirement = $request->Date_Retirement;
     $Emp->save();
 }
 

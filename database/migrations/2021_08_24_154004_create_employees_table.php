@@ -11,7 +11,7 @@ class CreateEmployeesTable extends Migration
      *
      * @return void
      */
-    public function store(Request $request)
+    public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
