@@ -15,10 +15,10 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_training')->constrained('trainings');
             $table->foreignId('id_employee')->constrained('employees');
-            $table->Date('Registration_Date');
-            $table->string('Observation');
+            $table->string('Instructor');
+            $table->string('Name_Employee');
+            $table->string('Employee_Surnames');
             $table->timestamps();
         });
     }
@@ -33,3 +33,4 @@ class CreateRecordsTable extends Migration
         Schema::dropIfExists('records');
     }
 }
+

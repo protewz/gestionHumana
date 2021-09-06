@@ -15,12 +15,12 @@ class CreateFollowsTable extends Migration
     {
         Schema::create('follows', function (Blueprint $table) {
             $table->id();
-             $table->foreignId('id_employee')->constrained('employees');
-            $table->Date('Date'); 
-            $table->integer('Turn'); 
-            $table->integer('Time_Entry');
-            $table->integer('Time_Departure');
-            $table->string('Observation'); 
+            $table->foreignId('id_employee')->constrained('employees');
+            $table->string('Name'); 
+            $table->string('Surnames');
+            $table->string('Ident_Card');
+            $table->string('Phone');
+            $table->string('Mail');
             $table->timestamps();
         });
     }
@@ -35,3 +35,4 @@ class CreateFollowsTable extends Migration
         Schema::dropIfExists('follows');
     }
 }
+

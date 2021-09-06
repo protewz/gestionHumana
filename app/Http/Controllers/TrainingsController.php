@@ -11,7 +11,7 @@ class TrainingsController extends Controller
     //
     public function index(Request $request)
     {
-        $Tra = employees::get();
+        $Tra = Trainings::get();
 
         return ['Tra'=>$Tra];
     }
@@ -45,7 +45,7 @@ class TrainingsController extends Controller
     
     public function update(Request $request)
     {
-        $Emp = Trainings::find($request->id);
+        $Tra = Trainings::find($request->id);
         $Tra ->Training_Name = $request->Training_Name;
         $Tra ->Training_Topic = $request->Training_Topic;                                        
         $Tra ->Instructor_Name = $request->Instructor_Name;
@@ -60,7 +60,7 @@ class TrainingsController extends Controller
     
     public function destroy(Request $request)
     {
-        $Tra = employees::findOrFail($request->id);
+        $Tra = Trainings::findOrFail($request->id);
         $Tra->delete();
     }
 }

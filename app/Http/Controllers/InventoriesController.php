@@ -50,8 +50,8 @@ class InventoriesController extends Controller
     
     public function destroy(Request $request)
     {
-        $ = employees::findOrFail($request->id);
-        $Emp->delete();
+        $Inv = Inventories::findOrFail($request->id);
+        $Inv->delete();
     }
 }
 

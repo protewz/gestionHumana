@@ -18,6 +18,7 @@ class CreateLoansTable extends Migration
             $table->foreignId('id_tool')->constrained('tools');
             $table->foreignId('id_inventory')->constrained('inventories');
             $table->string('Observation');
+            $table->string('Name');
             $table->timestamps();
         });
     }
