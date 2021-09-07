@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Follows;
-use App\Models\Employees;
 use App\Models\detFollows;
 use Carbon\Carbon;
 
