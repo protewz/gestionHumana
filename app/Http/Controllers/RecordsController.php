@@ -4,10 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\detRecord;
+use App\Models\records;
+use App\Models\Employees;
+
 
 class RecordsController extends Controller
 {
-    // //Guardar informacion
+    
+    
+    public function index(Request $request)
+    {
+        $Rec = Records::get();
+
+        return ['Rec'=>$Rec];
+    }
+
+    public function getData(Request $request)
+    {
+        $buscar=$request->idBuscar;
+
+        if ($buscar=='') {
+            $Rec = Records::select('id_employee')->get();
+        }else{
+            $Fol = Records::select('id_employee')->where('id','=',$buscar)->get();
+        }
+        return ['Records'=>$Rec];
+    }
+    
+    //Guardar informacion
     public function store(Request $request)
     {
         try 
@@ -20,25 +44,25 @@ class RecordsController extends Controller
             $Rec->Instructor = $request->Instructor;
             $Rec->Name_Employee = $request->Name_Employee;
             $Rec->Employee_Surnames = $request->Employee_Surnames;
-
+        
 
             $Rec->save();
 
-            $Regis=$request->arrayRegis;
+            $det=$request->arrayDetails;
 
-            foreach($Regis as $item=>$detail)
+            foreach($det as $item=>$detail)
             {
-                $recorDetails = new detRecord;
+                $detDetails = new det_follows;
 
-                $recorDetails ->id_record=$Rec->id;
-                $recorDetails ->Registration_Date = $date;
-                $recorDetails ->Time_Entry=$detail['Time_Entry'];
-                $recorDetails ->Time_Departure=$detail['Time_Departure'];
-                $recorDetails ->Observation=$detail['Observation'];
-                $recorDetails ->Place=$detail['Place'];
+                $detDetails->id_record=$Rec->id;
+                $detDetails->Registration_Date = $date;
+                $detDetails->Turn=$detail['Turn'];
+                $detDetails->Time_Entry=$detail['Time_Entry'];
+                $detDetails->Time_Departure=$detail['Time_Departure'];
+                $detDetails->Observation=$detail['Observation'];
+                $detDetails->Observation=$detail['Place'];
 
-                $recorDetails ->save();
-           
+                $detDetails->save();
             }
 
             DB::Commit();
@@ -51,26 +75,29 @@ class RecordsController extends Controller
 
     }
 
+    // metodo para modificar datos 
     public function update(Request $request)
     {
-      $Rec = Follows::find($request->id);
-      $Rec->id_employee = $request->id_employee;
-      $Rec->Instructor = $request->Instructor;
-      $Rec->Name_Employee = $request->Name_Employee;
-      $Rec->Employee_Surnames = $request->Employee_Surnames;
-     
-      $Rec->save()  
-    }
+        $Rec = Records::find($request->id);
+        $Rec ->id_employee = $request->id_employee;
+        $Rec ->Instructor = $request->Instructor;                                        
+        $Rec ->Name_Employee = $request->Name_Employee;
+        $Rec ->Employee_Surnames = $request->Employee_Surnames;
+    
+        $Rec ->save();
+    } 
 
-
+    
+    
+// metodo eliminar 
     public function destroy(Request $request)
     {
         try 
         {
             DB::beginTransaction();
-            $deleteRec = Records::where('id_Follow', $request->id)->delete();
+            $deleteFol = Records::where('id_record', $request->id)->delete();
 
-            $deleteRec = det_records::where('id_record', $request->id)->delete();
+            $deleteFol = det_Follows::where('id_record', $request->id)->delete();
     
             $Rec = Records::findOrFail($request->id);
             $Rec->delete();
@@ -80,9 +107,8 @@ class RecordsController extends Controller
             DB::rollback();
         }
     }
-
-
-
+ 
+}
 
     
-}
+

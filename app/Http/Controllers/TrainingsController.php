@@ -21,9 +21,9 @@ class TrainingsController extends Controller
         $buscar=$request->idBuscar;
     
         if ($buscar=='') {
-            $Tra = trainings::select('name')->get();
+            $Tra = trainings::select('Training_Name')->get();
         }else{
-             $Tra = trainings::select('name')->where('id','=',$Tra)->get();
+             $Tra = trainings::select('Training_Name')->where('id','=',$Tra)->get();
         }
         return ['training'=>$Tra];
     }

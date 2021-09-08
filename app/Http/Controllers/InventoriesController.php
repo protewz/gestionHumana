@@ -19,9 +19,9 @@ class InventoriesController extends Controller
         $buscar=$request->idBuscar;
     
         if ($buscar=='') {
-            $Inv = employees::select('name')->get();
+            $Inv = inventories::select('Serial')->get();
         }else{
-             $Inv = employees::select('name')->where('id','=',$Inv)->get();
+             $Inv = inventories::select('Observation')->where('id','=',$Inv)->get();
         }
         return ['inventories'=>$Inv];
     }

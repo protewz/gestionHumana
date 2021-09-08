@@ -13,6 +13,7 @@ use App\Http\Controllers\TrainingsController;
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,6 +38,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
+
+
 // metodos de tabla empleados
 Route::get('/api/employees/index',[EmployeesController::class,'index']); 
 Route::get('/api/employees/getData',[EmployeesController::class,'getData']);
@@ -45,7 +48,7 @@ Route::put('/api/employees/update',[EmployeesController::class,'update']);
 Route::delete('/api/employees/delete',[EmployeesController::class,'destroy']);
 
 // metodos de la tabla Follows
-Route::get('/api/follow/index',[FollowsController::class,'index']); 
+Route::get('/api/follows/index',[FollowsController::class,'index']);
 Route::get('/api/follows/getData',[FollowsController::class,'getData']);
 Route::post('/api/follows/store',[FollowsController::class,'store']); 
 Route::put('/api/follows/update',[FollowsController::class,'update']);
@@ -78,3 +81,5 @@ Route::get('/api/trainings/getData',[TrainingsController::class,'getData']);
 Route::post('/api/trainings/store',[TrainingsController::class,'store']); 
 Route::put('/api/trainings/update',[TrainingsController::class,'update']);
 Route::delete('/api/trainings/delete',[TrainingsController::class,'destroy']);
+
+
