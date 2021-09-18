@@ -6,6 +6,7 @@
             <Link v-if="$page.props.user" :href="route('dashboard')" class="text-sm text-gray-700 underline">
                 Dashboard
             </Link>
+            <inertia-linnk v-if="$page.props.Emp" :href="route('emple')">Empleados</inertia-linnk>
 
             <template v-else>
                 <Link :href="route('login')" class="text-sm text-gray-700 underline">

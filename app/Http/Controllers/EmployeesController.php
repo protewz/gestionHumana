@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Employees;
+use Inertia\Inertia; 
 
 
 class EmployeesController extends Controller
@@ -11,9 +12,11 @@ class EmployeesController extends Controller
 
     public function index(Request $request)
     {
-        $Emp = employees::get();
+        $Emp = Employees::get();
+        
 
-        return ['Emp'=>$Emp];
+       // return ['Emp'=>$Emp];
+       return Inertia::render('Empleado',['Emp'=>$Emp]);
     }
 
     public function getData(Request $request)
