@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\detRecord;
 use App\Models\records;
 use App\Models\Employees;
+use App\Http\Controllers\RecordsController;
+use Inertia\Inertia;
 
 
 class RecordsController extends Controller
@@ -16,7 +18,8 @@ class RecordsController extends Controller
     {
         $Rec = Records::get();
 
-        return ['Rec'=>$Rec];
+       // return ['Rec'=>$Rec];
+       return Inertia::render('Registrocapacitacion',['Rec'=>$Rec]);
     }
 
     public function getData(Request $request)
@@ -52,15 +55,14 @@ class RecordsController extends Controller
 
             foreach($det as $item=>$detail)
             {
-                $detDetails = new det_follows;
+                $detDetails = new det_records;
 
                 $detDetails->id_record=$Rec->id;
                 $detDetails->Registration_Date = $date;
-                $detDetails->Turn=$detail['Turn'];
                 $detDetails->Time_Entry=$detail['Time_Entry'];
                 $detDetails->Time_Departure=$detail['Time_Departure'];
                 $detDetails->Observation=$detail['Observation'];
-                $detDetails->Observation=$detail['Place'];
+                $detDetails->Place=$detail['Place'];
 
                 $detDetails->save();
             }

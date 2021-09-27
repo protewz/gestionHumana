@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Trainings;
+use Carbon\Carbon;
+use App\Http\Controllers\TrainingsController;
+use Inertia\Inertia;
 
 
 class TrainingsController extends Controller
@@ -13,7 +16,8 @@ class TrainingsController extends Controller
     {
         $Tra = Trainings::get();
 
-        return ['Tra'=>$Tra];
+        //return ['Tra'=>$Tra];
+        return Inertia::render('Capacitacion',['Tra'=>$Tra]);
     }
 
     public function getData(Request $request)

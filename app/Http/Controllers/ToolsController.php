@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Loans;
 use App\Models\Tools;
 use App\Http\Controllers\FollowsController;
+use Inertia\Inertia;
 
 class ToolsController extends Controller
 {
@@ -15,7 +16,8 @@ class ToolsController extends Controller
     {
         $Toll = tools::get();
 
-        return ['Toll'=>$Toll];
+       // return ['Toll'=>$Toll];
+       return Inertia::render('Prestamo',['Toll'=>$Toll]);
     }
 
     public function getData(Request $request)

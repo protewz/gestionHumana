@@ -8,6 +8,7 @@ use App\Models\Follows;
 use App\Models\detFollows;
 use App\Models\Employees;
 use Carbon\Carbon;
+use Inertia\Inertia;
 
 class FollowsController extends Controller
 {
@@ -16,7 +17,8 @@ class FollowsController extends Controller
     {
         $Fol = Follows::get();
 
-        return ['Fol'=>$Fol];
+        //return ['Fol'=>$Fol];
+        return Inertia::render('Seguimiento',['Fol'=>$Fol]);
     }
 
     public function getData(Request $request)

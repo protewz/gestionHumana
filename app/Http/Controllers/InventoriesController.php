@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Inventories;
+use Inertia\Inertia;
 
 class InventoriesController extends Controller
 {
@@ -12,7 +13,8 @@ class InventoriesController extends Controller
     {
         $Inv = inventories::get();
 
-        return ['Inv'=>$Inv];
+       // return ['Inv'=>$Inv];
+       return Inertia::render('Inventario',['Inv'=>$Inv]);
     }
     public function getData(Request $request)
     {

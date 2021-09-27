@@ -2,7 +2,7 @@
   <app-layout title="Dashboard">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        FUNCIONARIOS DE LA EMPRESA
+        SEGUIMIENTO A EMPLEADOS
       </h2>
     </template>
 
@@ -26,7 +26,7 @@
         id="default"
         type="text"
         name="default"
-        placeholder="Ingrese su nombre"
+        placeholder=""
         
         class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200"
         />
@@ -35,7 +35,7 @@
         id="default"
         type="text"
         name="default"
-        placeholder="Ingrese su apellido"
+        placeholder=""
         
         class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200"
         />
@@ -44,70 +44,70 @@
         id="default"
         type="text"
         name="default"
-        placeholder="Digite su numero de identificacion"
+        placeholder=""
         
         class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200"
         />
-               <label for="default" class="text-gray-700 select-none font-medium">Telefono</label>
+          <label for="default" class="text-gray-700 select-none font-medium">Telefono</label>
         <input
         id="default"
         type="text"
         name="default"
-        placeholder="Ingrese su numero de telefono"
+        placeholder=""
         
         class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200"
         />
-               <label for="default" class="text-gray-700 select-none font-medium">Email</label>
+          <label for="default" class="text-gray-700 select-none font-medium">Email</label>
         <input
         id="default"
         type="text"
         name="default"
-        placeholder="Registre su correo electronico"
+        placeholder=""
         
         class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200"
         />
-               <label for="default" class="text-gray-700 select-none font-medium">Direccion</label>
+          <label for="default" class="text-gray-700 select-none font-medium">Fecha</label>
         <input
         id="default"
         type="text"
         name="default"
-        placeholder="Registre su direccion de residencia"
+        placeholder=""
         
         class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200"
         />
-               <label for="default" class="text-gray-700 select-none font-medium">Fecha de nacimiento</label>
+          <label for="default" class="text-gray-700 select-none font-medium">Turno</label>
         <input
         id="default"
         type="text"
         name="default"
-        placeholder="Ingrese su fecha de nacimiento"
+        placeholder=""
         
         class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200"
         />
-               <label for="default" class="text-gray-700 select-none font-medium">Correo opcional</label>
+          <label for="default" class="text-gray-700 select-none font-medium">Hora de ingreso</label>
         <input
         id="default"
         type="text"
         name="default"
-        placeholder="Ingrese otra direccion de correo electronico"
+        placeholder=""
         
         class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200"
         />
-               <label for="default" class="text-gray-700 select-none font-medium">Fecha de Ingreso</label>
+          <label for="default" class="text-gray-700 select-none font-medium">Hora de salida</label>
         <input
         id="default"
         type="text"
         name="default"
-        placeholder="En que fecha ingreso a la empresa?"
+        placeholder=""
         
         class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200"
         />
-               <label for="default" class="text-gray-700 select-none font-medium">Fecha de Retiro</label>
+          <label for="default" class="text-gray-700 select-none font-medium">Observacion</label>
         <input
         id="default"
         type="text"
         name="default"
-        placeholder="Regisstro de retiro"
+        placeholder=""
         
         class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200"
         />
@@ -161,15 +161,14 @@
                     leading-normal
                   "
                 >
-                  <th class="py-2 px-3 text-left ">NOMBRE</th>
-                  <th class="py-2 px-3 text-left">APELLIDO</th>
-                  <th class="py-2 px-3 text-left">IDENTIFICACION</th>
-                  <th class="py-2 px-3 text-center w-24">TELEFONO</th>
-                  <th class="py-2 px-3 text-center w-24">Acciones</th>
+                  <th class="py-3 px-6 text-left ">NOMBRE</th>
+                  <th class="py-3 px-6 text-left">APELLIDO</th>
+                  <th class="py-3 px-6 text-left">TELEFONO</th>
+                  <th class="py-3 px-6 text-center w-24">Acciones</th>
                 </tr>
               </thead>
               <tbody class="text-gray-600 text-sm font-light">
-                <tr v-for="(objeto,index) in Emp" :key="index"> 
+                <tr v-for="(objeto,index) in Fol" :key="index"> 
                   <td class="py-3 px-6 text-left ">
                     <div class="flex items-center">
                         <span >{{objeto.Name}}</span>
@@ -177,19 +176,15 @@
                   </td>
                       <td class="py-3 px-6 text-left ">
                     <div class="flex items-center">
-                          <span >{{objeto.Surnames}}</span>
+                        <span >{{objeto.Surnames}}</span>
                     </div>
                   </td>
                       <td class="py-3 px-6 text-left ">
                     <div class="flex items-center">
-                      <span >{{objeto.Ident_Card}}</span>
+                        <span >{{objeto.Phone}}</span>
                     </div>
                   </td>
-    <td class="py-3 px-6 text-left ">
-                    <div class="flex items-center">
-                          <span >{{objeto.Phone}}</span>
-                    </div>
-                  </td>
+
                   
                   <td class="py-3 px-6 text-center w-24">
                     <div class="flex item-center justify-center">
@@ -353,7 +348,7 @@ export default defineComponent({
     }
 
 },
-  props: ['Emp'],
+  props: ['Fol'],
 }
 );
 

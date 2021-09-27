@@ -3,6 +3,11 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\FollowsController;
+use App\Http\Controllers\InventoriesController;
+use App\Http\Controllers\ToolsController;
+use App\Http\Controllers\TrainingsController;
+use App\Http\Controllers\RecordsController;
 use Inertia\Inertia;
 
 /*
@@ -30,3 +35,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/api/employees/index',[EmployeesController::class,'index'])->name('emple');
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/follows/index',[FollowsController::class,'index'])->name('segui');
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/inventories/index',[InventoriesController::class,'index'])->name('inventario');
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/tools/index',[ToolsController::class,'index'])->name('prestamo');
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/trainings/index',[TrainingsController::class,'index'])->name('capacitacion');
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/dettrainings/index',[RecordsController::class,'index'])->name('registrocap');
