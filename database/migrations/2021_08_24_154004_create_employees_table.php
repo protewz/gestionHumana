@@ -22,7 +22,6 @@ class CreateEmployeesTable extends Migration
             $table->string('Mail');
             $table->string('Adrres');
             $table->Date('Date_Birth');
-            $table->string('Post');
             $table->Date('Date_Admission');
             $table->Date('Date_Retirement');
             $table->timestamps();

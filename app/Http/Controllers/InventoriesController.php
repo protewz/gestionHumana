@@ -16,6 +16,15 @@ class InventoriesController extends Controller
        // return ['Inv'=>$Inv];
        return Inertia::render('Inventario',['Inv'=>$Inv]);
     }
+
+
+    public function index2(Request $request)
+    {
+        $Inv = inventories::get();
+        return ['Inventario'=>$Inv];
+    }
+
+
     public function getData(Request $request)
     {
         $buscar=$request->idBuscar;

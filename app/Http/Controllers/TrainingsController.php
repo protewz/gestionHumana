@@ -20,6 +20,12 @@ class TrainingsController extends Controller
         return Inertia::render('Capacitacion',['Tra'=>$Tra]);
     }
 
+    public function index2(Request $request)
+    {
+        $Tra = Trainings::get();
+        return ['Capacitacion'=>$Tra];
+    }
+
     public function getData(Request $request)
     {
         $buscar=$request->idBuscar;
