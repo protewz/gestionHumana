@@ -23,6 +23,11 @@
                                     Inicio
                                     </jet-nav-link>
                                </div>
+                                       <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('capacitacion')" :active="route().current('capacitacion')">
+                                    Capacitaciones
+                                    </jet-nav-link>
+                            </div>
 
                         
                                
@@ -31,34 +36,15 @@
                                     Empleados 
                                     </jet-nav-link>
                             </div>
-
-                                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <jet-nav-link :href="route('segui')" :active="route().current('segui')">
-                                    Seguimiento
-                                    </jet-nav-link>
-
-                            </div>
-                                  <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            
+                                   <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <jet-nav-link :href="route('inventario')" :active="route().current('inventario')">
                                     Inventario
                                     </jet-nav-link>
 
                             </div>
-                                   <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <jet-nav-link :href="route('prestamo')" :active="route().current('prestamo')">
-                                    prestamo de herramientas
-                                    </jet-nav-link>
-                            </div>
-                                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <jet-nav-link :href="route('capacitacion')" :active="route().current('capacitacion')">
-                                    Capacitaciones
-                                    </jet-nav-link>
-                            </div>
-                                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <jet-nav-link :href="route('registrocap')" :active="route().current('registrocap')">
-                                    Registrar capacitacion
-                                    </jet-nav-link>
-                            </div>
+
+                             
                             
                         </div>
 

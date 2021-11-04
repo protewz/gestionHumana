@@ -85,7 +85,7 @@
                                 </div>
                                  <div class="mb-3 space-y-2 w-full">
                                     <label class="text-gray-700 select-none font-medium py-2">Fecha</label>
-                                    <input v-model="fecha" placeholder="" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
+                                    <input v-model="fecha" placeholder="diligencie fecha 00/00/00" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                                  <div class="mb-3 space-y-2 w-full">
@@ -149,7 +149,7 @@ export default defineComponent({
   components: {
     AppLayout
   },
-        data() 
+   data() 
         {
             return{
                 modal: false,
@@ -165,38 +165,49 @@ export default defineComponent({
         },
         methods:
         {
-            limpiar(){
-                this.herramienta="";
-                this.serial="";
-                this.fecha="";
-                this.observacion="";
-              
+            abrirModal()
+            {
+                this.titulo = "Nuevo Registro"
+                this.modal = true;
+                this.tpAccion=0;
+                this.limpiar();
+            },
+            registrar()
+            {     
+                let me=this;
+                var url="/api/inventories/registrar";
+                axios.post(url, 
+                {
+                    Tool_Name:this.herramienta,
+                    Serial:this.serial,
+                    Purchase_Date:this.fecha,
+                    Observation:this.observacion
+                })
+                .then(function(response)
+                {
+                    me.listarDatos();
+                    me.limpiar();
+                    me.cerrarModal();
+                    me.mensaje('Registro creado!!','El registro se creo correctamente.','success');
+                })
+                .catch(function(error) 
+                {
+                    me.mensaje('Error al crear Registro!!',error.message,'error');
+                });
+            },
+            limpiar()
+            {
+                 this.herramienta="";
+                 this.serial="";
+                 this.fecha="";
+                 this.observacion="";
             },
             nuevo()
             {
                 this.titulo = "Nuevo Registro";
                 this.modal = true;
-            },
-            listarDatos(){
-                let me=this;
-                var url='/api/inventories/index2';
-
-                axios.get(url)
-                .then(function(response){
-                    var respuesta=response.data;
-                    me.arrayDatos=respuesta.Inventario;
-                })
-                .catch(function(error){
-                })
-            },            
-            abrirModal(){
-                let me=this;
-                this.titulo = "Nuevo Registro"
-                this.modal = true;
-                me.limpiar();
                 this.tpAccion=0;
-                this.nombre="";
-            },  
+            },    
             ver(data=[])
             {
                 this.idHerramienta=data['id'];
@@ -207,27 +218,25 @@ export default defineComponent({
                 this.modal = true;
                 this.tpAccion=-1;
                 this.titulo = "Ver Registro"
-            },
-
-      update(){
-      let me=this;
-      var url='/api/inventories/actualizar';
-      axios.put(url, {
-        id:this.idHerramienta,
-        Tool_Name:this.herramienta.toUpperCase(),
-        Serial:this.serial.toUpperCase(),
-        Purchase_Date:this.fecha,
-        Observation:this.observacion.toUpperCase(),
-        
-
-      })
-      .then(function(response) {
-        me.listarDatos();      
-        me.mensaje('Registro actualizado!!','El registro se actualizo exitosamente','success');;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+            },    
+            update()
+            {
+                let me=this;
+                var url="/api/inventories/actualizar";
+                axios.put(url, {
+                    id:this. idHerramienta,
+                    Tool_Name:this.herramienta,
+                    Serial:this.serial,
+                    Purchase_Date:this.fecha,
+                    Observation:this.observacion
+                })
+                .then(function(response) {
+                    me.listarDatos();      
+                    me.mensaje('Registro actualizado!!','El registro se actualizo correctamente.','success');
+                })
+                .catch(function(error) {
+                    me.mensaje('Error al guardar!!',error.message,'success');
+                });
             }, 
             actualizar(data=[])
             {
@@ -239,40 +248,20 @@ export default defineComponent({
                 this.modal = true;
                 this.tpAccion=1;
                 this.titulo = "Actualizar Registro"
-                
-            },            
-                 registrar(){     
-      let me=this;
-      var url='/api/inventories/registrar';
-      axios.post(url, {
-          id:this.idHerramienta,
-        Tool_Name:this.herramienta.toUpperCase(),
-        Serial:this.serial.toUpperCase(),
-        Purchase_Date:this.fecha,
-        Observation:this.observacion.toUpperCase(),
-      })
-      .then(function(response) {
-        me.listarDatos();
-        me.limpiar();
-        me.cerrarModal();
-        me.mensaje('Registro guardado', 'El registro se guardó exitosamente','success');
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-            },            
-            delete(){
+            },
+            delete()
+            {
                 let me=this;
-                var url='/api/inventories/eliminar';
+                var url="/api/inventories/eliminar" ;
                 axios.post(url,{
                     id:this.idHerramienta
                 })
                 .then(function(response) {
                     me.listarDatos();
-                    me.mensaje('Registro eliminado!!','El registro se elimino exitosamente.','success');       
+                    me.mensaje('Registro eliminado!!','El registro se elimino exitosamente.','success');        
                 })
                 .catch(function(error) {
-                    alert(error);
+                    me.mensaje('Error al eliminar!!',error.message,'success');
                 })
             },
             eliminar(data=[]){
@@ -283,15 +272,30 @@ export default defineComponent({
             {
                 this.modal = false;
             },
-            confirmar(){
+            listarDatos()
+            {
+                let me=this;
+                var url="/api/inventories/index2";
+
+                axios.get(url)
+                .then(function(response)
+                {
+                    var respuesta=response.data;
+                    me.arrayDatos=respuesta.Inventario;
+                })
+                .catch(function(error){
+                })
+            },
+            confirmar()
+            {
                 this.delete();
                 this.tpAccion=0;
             },
-            confirmarNO(){
+            confirmarNO()
+            {
                 this.tpAccion=0;
             },
-            mensaje(head, body, button)
-            {
+            mensaje(head, body, button){
                 Swal.fire(
                     head,
                     body,
@@ -299,11 +303,14 @@ export default defineComponent({
                 )            
             }            
         },
-        mounted(){
+        mounted()
+        {
             this.listarDatos();
-        }
+        },
+        props: ['inventories'],
     })
 </script>
+    
 
 
 

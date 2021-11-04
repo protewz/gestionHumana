@@ -105,18 +105,18 @@
                                 </div>
                                   <div class="mb-3 space-y-2 w-full">
                                     <label class="text-gray-700 select-none font-medium py-2">Fecha de Nacimiento</label>
-                                    <input v-model="fechaNacimiento" placeholder="" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
+                                    <input v-model="fechaNacimiento" placeholder="diligencie fecha 00/00/00" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                                 
                                   <div class="mb-3 space-y-2 w-full">
                                     <label class="text-gray-700 select-none font-medium py-2">Fecha de Ingreso</label>
-                                    <input v-model="fechaIngreso" placeholder="" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
+                                    <input v-model="fechaIngreso" placeholder="diligencie fecha 00/00/00" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                                   <div class="mb-3 space-y-2 w-full">
                                     <label class="text-gray-700 select-none font-medium py-2">Fecha de Retiro</label>
-                                    <input v-model="fechaRetiro" placeholder="" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
+                                    <input v-model="fechaRetiro" placeholder="diligencie fecha 00/00/00" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                                
@@ -174,7 +174,7 @@ export default defineComponent({
   components: {
     AppLayout
   },
-        data() 
+   data() 
         {
             return{
                 modal: false,
@@ -195,7 +195,43 @@ export default defineComponent({
         },
         methods:
         {
-            limpiar(){
+            abrirModal()
+            {
+                this.titulo = "Nuevo Registro"
+                this.modal = true;
+                this.tpAccion=0;
+                this.limpiar();
+            },
+            registrar()
+            {     
+                let me=this;
+                var url="/api/employees/registrar";
+                axios.post(url, 
+                {
+                    Name:this.nombre,
+                    Surnames:this.apellido,
+                    Ident_Card:this.identificacion,
+                    Phone:this.telefono,
+                    Mail:this.mail,
+                    Adrres:this.direccion,
+                    Date_Birth:this.fechaNacimiento,
+                    Date_Admission:this.fechaIngreso,
+                    Date_Retirement:this.fechaRetiro
+                })
+                .then(function(response)
+                {
+                    me.listarDatos();
+                    me.limpiar();
+                    me.cerrarModal();
+                    me.mensaje('Registro creado!!','El registro se creo correctamente.','success');
+                })
+                .catch(function(error) 
+                {
+                    me.mensaje('Error al crear Registro!!',error.message,'error');
+                });
+            },
+            limpiar()
+            {
                 this.nombre="";
                 this.apellido="";
                 this.identificacion="";
@@ -205,34 +241,13 @@ export default defineComponent({
                 this.fechaNacimiento="";
                 this.fechaIngreso="";
                 this.fechaRetiro="";
-
-              
             },
             nuevo()
             {
                 this.titulo = "Nuevo Registro";
                 this.modal = true;
-            },
-            listarDatos(){
-                let me=this;
-                var url='/api/employees/index2';
-
-                axios.get(url)
-                .then(function(response){
-                    var respuesta=response.data;
-                    me.arrayDatos=respuesta.Empleado;
-                })
-                .catch(function(error){
-                })
-            },            
-            abrirModal(){
-                let me=this;
-                this.titulo = "Nuevo Registro"
-                this.modal = true;
-                me.limpiar();
                 this.tpAccion=0;
-                this.nombre="";
-            },  
+            },    
             ver(data=[])
             {
                 this.idEmpleado=data['id'];
@@ -248,32 +263,30 @@ export default defineComponent({
                 this.modal = true;
                 this.tpAccion=-1;
                 this.titulo = "Ver Registro"
-            },
-            update(){
-      let me=this;
-      var url='/api/employees/actualizar';
-      axios.put(url, {
-        id:this.idEmpleado,
-        Name:this.nombre.toUpperCase(),
-        Surnames:this.apellido.toUpperCase(),
-        Ident_Card:this.identificacion.toUpperCase(),
-        Phone:this.telefono.toUpperCase(),
-        Mail:this.mail.toUpperCase(),
-        Adrres:this.direccion.toUpperCase(),
-        Date_Birth:this.fechaNacimiento,
-        Date_Admission:this.fechaIngreso,
-        Date_Retirement:this.fechaRetiro,
-       
-        
-
-      })
-      .then(function(response) {
-        me.listarDatos();      
-        me.mensaje('Registro actualizado!!','El registro se actualizo exitosamente','success');;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+            },    
+            update()
+            {
+                let me=this;
+                var url="/api/employees/actualizar";
+                axios.put(url, {
+                    id:this. idEmpleado,
+                    Name:this.nombre,
+                    Surnames:this.apellido,
+                    Ident_Card:this.identificacion,
+                    Phone:this.telefono,
+                    Mail:this.mail,
+                    Adrres:this.direccion,
+                    Date_Birth:this.fechaNacimiento,
+                    Date_Admission:this.fechaIngreso,
+                    Date_Retirement:this.fechaRetiro
+                })
+                .then(function(response) {
+                    me.listarDatos();      
+                    me.mensaje('Registro actualizado!!','El registro se actualizo correctamente.','success');
+                })
+                .catch(function(error) {
+                    me.mensaje('Error al guardar!!',error.message,'success');
+                });
             }, 
             actualizar(data=[])
             {
@@ -287,54 +300,23 @@ export default defineComponent({
                 this.fechaNacimiento=data['Date_Birth'];
                 this.fechaIngreso=data['Date_Admission'];
                 this.fechaRetiro=data['Date_Retirement'];
-             
                 this.modal = true;
                 this.tpAccion=1;
                 this.titulo = "Actualizar Registro"
-                
-            },            
-            registrar(){     
+            },
+            delete()
+            {
                 let me=this;
-                var url='/api/employees/registrar';
-                axios.post(url, 
-                {
-                    Name:this.nombre,
-                    Surnames:this.apellido,
-                    Ident_Card:this.identificacion,
-                    Phone:this.telefono,
-                    Mail:this.mail,
-                    Adrres:this.direccion,
-                    Date_Birth:this.fechaNacimiento,
-                    Date_Admission:this.fechaIngreso,
-                    Date_Retirement:this.fechaRetiro
-                  
-                   
-                })
-                .then(function(response)
-                {
-                    me.listarDatos();
-                    me.cerrarModal();
-                    me.mensaje('Registro creado!!','El registro se creo correctamente.','success');
-                    //alert("Se registro correctamente");
-                })
-                .catch(function(error) 
-                {
-                    //me.mensaje('Error al crear Registro!!',error,'error');
-                    alert(error);
-                });
-            },            
-            delete(){
-                let me=this;
-                var url='/api/Employees/eliminar';
+                var url="/api/Employees/eliminar" ;
                 axios.post(url,{
                     id:this.idEmpleado
                 })
                 .then(function(response) {
                     me.listarDatos();
-                    me.mensaje('Registro eliminado!!','El registro se elimino exitosamente.','success');       
+                    me.mensaje('Registro eliminado!!','El registro se elimino exitosamente.','success');        
                 })
                 .catch(function(error) {
-                    alert(error);
+                    me.mensaje('Error al eliminar!!',error.message,'success');
                 })
             },
             eliminar(data=[]){
@@ -345,15 +327,30 @@ export default defineComponent({
             {
                 this.modal = false;
             },
-            confirmar(){
+            listarDatos()
+            {
+                let me=this;
+                var url="/api/employees/index2";
+
+                axios.get(url)
+                .then(function(response)
+                {
+                    var respuesta=response.data;
+                    me.arrayDatos=respuesta.Empleado;
+                })
+                .catch(function(error){
+                })
+            },
+            confirmar()
+            {
                 this.delete();
                 this.tpAccion=0;
             },
-            confirmarNO(){
+            confirmarNO()
+            {
                 this.tpAccion=0;
             },
-            mensaje(head, body, button)
-            {
+            mensaje(head, body, button){
                 Swal.fire(
                     head,
                     body,
@@ -361,8 +358,12 @@ export default defineComponent({
                 )            
             }            
         },
-        mounted(){
+        mounted()
+        {
             this.listarDatos();
-        }
+        },
+        props: ['Empleado'],
     })
 </script>
+  
+        

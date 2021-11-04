@@ -91,7 +91,7 @@
                                 </div>
                                  <div class="mb-3 space-y-2 w-full">
                                     <label class="text-gray-700 select-none font-medium py-2">Fecha</label>
-                                    <input v-model="fechaCapacitacion" placeholder="" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
+                                    <input v-model="fechaCapacitacion" placeholder="diligencie fecha 00/00/00" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                                  <div class="mb-3 space-y-2 w-full">
@@ -170,202 +170,189 @@ export default defineComponent({
   components: {
     AppLayout
   },
-    data() {
-    return {
-      modal: false,
-      titulo:"",
-      tpAccion:1,//1 guardar 0 actualizar
-      nombreCapacitacion:"",
-      nombreTema:"",
-      nombreInstructor:"",
-      fechaCapacitacion:"",
-      horaEntrada:"",
-      HoraSalida:"",
-      lugar:"",
-      observacion:"",
-     
-      idCapacitacion:"",
-      arrayDatos:[]
-  
-    };
-  },
-  methods: {
-    demo(){
-        alert("Hola munod voy a editar");
-    },
-    limpiar(){
-      this.nombreCapacitacion="";
-      this.nombreTema="";
-      this.nombreInstructor="";
-      this.fechaCapacitacion="";
-      this.horaEntrada="";
-      this.HoraSalida="";
-      this.lugar="";
-      this.observacion="";
-      
-    },
-    registrar(){ 
-          
-      let me=this;
-      var url='/api/trainings/registrar';
-      axios.post(url, {
-        Training_Name:this.nombreCapacitacion.toUpperCase(),
-        Training_Topic:this.nombreTema.toUpperCase(),
-        Instructor_Name:this.nombreInstructor.toUpperCase(),
-        Training_Date:this.fechaCapacitacion,
-        Time_Entry:this.horaEntrada,
-        Time_Departure :this.HoraSalida,
-        Place:this.lugar,
-        Observation:this.observacion.toUpperCase()
-      })
-      .then(function(response) {
-        me.listarDatos();
-        me.limpiar();
-        me.cerrarModal();
-        me.mensaje('Registro guardado', 'El registro se guardó exitosamente','success');
-        
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+   data() 
+        {
+            return{
+                modal: false,
+                titulo : "",
+                tpAccion: 1,//1 guardar 0 actualizar
+                nombreCapacitacion:"",
+                nombreTema:"",
+                nombreInstructor:"",
+                fechaCapacitacion:"",
+                horaEntrada:"",
+                HoraSalida:"",
+                lugar:"",
+                observacion:"",
+                idCapacitacion:"",
+                arrayDatos:[]
+            };
+        },
+        methods:
+        {
+            abrirModal()
+            {
+                this.titulo = "Nuevo Registro"
+                this.modal = true;
+                this.tpAccion=0;
+                this.limpiar();
+            },
+            registrar()
+            {     
+                let me=this;
+                var url="/api/trainings/registrar";
+                axios.post(url, 
+                {
+                 Training_Name:this.nombreCapacitacion,
+                 Training_Topic:this.nombreTema,
+                 Instructor_Name:this.nombreInstructor,
+                 Training_Date:this.fechaCapacitacion,
+                 Time_Entry:this.horaEntrada,
+                 Time_Departure:this.HoraSalida,
+                 Place:this.lugar,
+                 Observation:this.observacion
+                })
+                .then(function(response)
+                {
+                    me.listarDatos();
+                    me.limpiar();
+                    me.cerrarModal();
+                    me.mensaje('Registro creado!!','El registro se creo correctamente.','success');
+                })
+                .catch(function(error) 
+                {
+                    me.mensaje('Error al crear Registro!!',error.message,'error');
+                });
+            },
+            limpiar()
+            {
+                 this.nombreCapacitacion="";
+                 this.nombreTema="";
+                 this.nombreInstructor="";
+                 this.fechaCapacitacion="";
+                 this.horaEntrada="";
+                 this.HoraSalida="";
+                 this.lugar="";
+                 this.observacion="";
+            },
+            nuevo()
+            {
+                this.titulo = "Nuevo Registro";
+                this.modal = true;
+                this.tpAccion=0;
+            },    
+            ver(data=[])
+            {
+                this.idCapacitacion=data['id'];
+                this.nombreCapacitacion=data['Training_Name'];
+                this.nombreTema=data['Training_Topic'];
+                this.nombreInstructor=data['Instructor_Name'];
+                this.fechaCapacitacion=data['Training_Date'];
+                this.horaEntrada=data['Time_Entry'];
+                this.HoraSalida=data['Time_Departure'];
+                this.lugar=data['Place'];
+                this.observacion=data['Observation'];
+                this.modal = true;
+                this.tpAccion=-1;
+                this.titulo = "Ver Registro"
+            },    
+            update()
+            {
+                let me=this;
+                var url="/api/trainings/actualizar";
+                axios.put(url, {
+                    id:this. idCapacitacion,
+                    Training_Name:this.nombreCapacitacion,
+                    Training_Topic:this.nombreTema,
+                    Instructor_Name:this.nombreInstructor,
+                    Training_Date:this.fechaCapacitacion,
+                    Time_Entry:this.horaEntrada,
+                    Time_Departure:this.HoraSalida,
+                    Place:this.lugar,
+                   Observation:this.observacion
+                })
+                .then(function(response) {
+                    me.listarDatos();      
+                    me.mensaje('Registro actualizado!!','El registro se actualizo correctamente.','success');
+                })
+                .catch(function(error) {
+                    me.mensaje('Error al guardar!!',error.message,'success');
+                });
+            }, 
+            actualizar(data=[])
+            {
+                this.idCapacitacion=data['id'];
+                this.nombreCapacitacion=data['Training_Name'];
+                this.nombreTema=data['Training_Topic'];
+                this.nombreInstructor=data['Instructor_Name'];
+                this.fechaCapacitacion=data['Training_Date'];
+                this.horaEntrada=data['Time_Entry'];
+                this.HoraSalida=data['Time_Departure'];
+                this.lugar=data['Place'];
+                this.observacion=data['Observation'];
+                this.modal = true;
+                this.tpAccion=1;
+                this.titulo = "Actualizar Registro"
+            },
+            delete()
+            {
+                let me=this;
+                var url="/api/trainings/eliminar" ;
+                axios.post(url,{
+                    id:this.idCapacitacion
+                })
+                .then(function(response) {
+                    me.listarDatos();
+                    me.mensaje('Registro eliminado!!','El registro se elimino exitosamente.','success');        
+                })
+                .catch(function(error) {
+                    me.mensaje('Error al eliminar!!',error.message,'success');
+                })
+            },
+            eliminar(data=[]){
+                this.idCapacitacion=data['id'];
+                this.tpAccion=2;
+            },
+            cerrarModal()
+            {
+                this.modal = false;
+            },
+            listarDatos()
+            {
+                let me=this;
+                var url="/api/trainings/index2";
 
-    },
-    abrirModal(){
-      this.titulo = "Nuevo Registro"
-      this.modal = true;
-    },  
-    update(){
-      let me=this;
-      var url='/api/trainings/actualizar';
-      axios.put(url, {
-        id:this.idCapacitacion,
-        Training_Name:this.nombreCapacitacion.toUpperCase(),
-        Training_Topic:this.nombreTema.toUpperCase(),
-        Instructor_Name:this.nombreInstructor.toUpperCase(),
-        Training_Date:this.fechaCapacitacion,
-        Time_Entry:this.horaEntrada,
-        Time_Departure:this.HoraSalida,
-        Place:this.lugar,
-        Observation:this.observacion.toUpperCase()
-      })
-      .then(function(response) {
-        me.listarDatos();
-        me.mensaje('Registro actualizado!!','El registro se actualizo exitosamente','success');
-        
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-
-    } , 
-    actualizar(data=[]){
-      this.idCapacitacion=data['id'];
-      this.nombreCapacitacion=data['Training_Name'];
-      this.nombreTema=data['Training_Topic'];
-      this.nombreInstructor=data['Instructor_Name'];
-      this.fechaCapacitacion=data['Training_Date'];
-      this.horaEntrada=data['Time_Entry'];
-      this.HoraSalida=data['Time_Departure'];
-      this.lugar=data['Place'];
-      this.observacion=data['Observation'];
-
-      this.modal = true;
-      this.tpAccion=0;
-      this.titulo = "Actualizar Registro"
-    },
-    delete(){
-      let me=this;
-      var url='/api/trainings/eliminar';
-      axios.post(url,{
-        id:this.idCapacitacion
-      })
-      .then(function(response) {
-        me.listarDatos();
-        me.mensaje('Registro eliminado!!','El registro se eliminó exitosamente','success');        
-      })
-      .catch(function(error) {
-        console.log(error);
-      })
-    },
-    eliminar(data=[]){
-      this.idCapacitacion=data['id'];
-      this.tpAccion=2;
-    },
-    listarDatos(){
-      let me=this;
-      var url='/api/trainings/index2';
-
-      axios.get(url)
-      .then(function(response){
-        var respuesta=response.data;
-        me.arrayDatos=respuesta.Capacitacion;
-      })
-      .catch(function(error){
-      })
-    },
-    cerrarModal(){
-      this.modal = false;
-    },
-    confirmar(){
-      this.delete();
-      this.tpAccion=0;
-    },
-    confirmarNO(){
-      this.tpAccion=0;
-    },
-    mensaje(head,body,button){
-      Swal.fire(
-        head,
-        body,
-        button
-      )
-    }
-
-},
-mounted(){
-  this.listarDatos();
-},
-  props: ["tcerti"],
-},
-
-);
-
+                axios.get(url)
+                .then(function(response)
+                {
+                    var respuesta=response.data;
+                    me.arrayDatos=respuesta.Capacitacion;
+                })
+                .catch(function(error){
+                })
+            },
+            confirmar()
+            {
+                this.delete();
+                this.tpAccion=0;
+            },
+            confirmarNO()
+            {
+                this.tpAccion=0;
+            },
+            mensaje(head, body, button){
+                Swal.fire(
+                    head,
+                    body,
+                    button
+                )            
+            }            
+        },
+        mounted()
+        {
+            this.listarDatos();
+        },
+        props: ['Capacitacion'],
+    })
 </script>
-<style>
-
-.table {
-  border-spacing: 0 15px;
-}
-
-i {
-  font-size: 1rem !important;
-}
-
-.table tr {
-  border-radius: 20px;
-}
-
-tr td:nth-child(n + 5),
-tr th:nth-child(n + 5) {
-  border-radius: 0 0.625rem 0.625rem 0;
-}
-
-tr td:nth-child(1),
-tr th:nth-child(1) {
-  border-radius: 0.625rem 0 0 0.625rem;
-}
-</style>
-
-
-
-
-
-
-  $Tra ->Training_Name = $request->Training_Name;
-        $Tra ->Training_Topic = $request->Training_Topic;                                        
-        $Tra ->Instructor_Name = $request->Instructor_Name;
-        $Tra ->Training_Date = $request->Training_Date;
-        $Tra ->Time_Entry = $request->Time_Entry;
-        $Tra ->Time_Departure = $request->Time_Departure;
-        $Tra ->Place = $request->Place;
-        $Tra ->Observation = $request->Observation;
+   

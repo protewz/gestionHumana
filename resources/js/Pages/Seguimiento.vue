@@ -75,31 +75,46 @@
                             <div class="flex flex-col px-6 py-5 bg-pink-50">
                                 <div class="mb-3 space-y-2 w-full">
                                     <label class="text-gray-700 select-none font-medium py-2">Nombre</label>
-                                    <input v-model="nombre" placeholder="Ingrese agenda" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
+                                    <input v-model="nombres" placeholder="Ingrese agenda" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                                  <div class="mb-3 space-y-2 w-full">
                                     <label class="text-gray-700 select-none font-medium py-2">Apellido</label>
-                                    <input v-model="nombre" placeholder="Ingrese agenda" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
+                                    <input v-model="apellido" placeholder="Ingrese agenda" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                                  <div class="mb-3 space-y-2 w-full">
                                     <label class="text-gray-700 select-none font-medium py-2">identificacion</label>
+                                    <input v-model="identificacion" placeholder="Ingrese agenda" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
+                                    <p class="text-red text-xs hidden">Please fill out this field.</p>
+                                </div>
+                                 <div class="mb-3 space-y-2 w-full">
+                                    <label class="text-gray-700 select-none font-medium py-2">Telefono</label>
+                                    <input v-model="telefono" placeholder="Ingrese agenda" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
+                                    <p class="text-red text-xs hidden">Please fill out this field.</p>
+                                </div>
+                                 <div class="mb-3 space-y-2 w-full">
+                                    <label class="text-gray-700 select-none font-medium py-2">Email</label>
+                                    <input v-model="email" placeholder="Ingrese agenda" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
+                                    <p class="text-red text-xs hidden">Please fill out this field.</p>
+                                </div>
+                                 <div class="mb-3 space-y-2 w-full">
+                                    <label class="text-gray-700 select-none font-medium py-2">fecha</label>
                                     <input v-model="nombre" placeholder="Ingrese agenda" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                                  <div class="mb-3 space-y-2 w-full">
-                                    <label class="text-gray-700 select-none font-medium py-2">Agenda</label>
+                                    <label class="text-gray-700 select-none font-medium py-2">Turno</label>
                                     <input v-model="nombre" placeholder="Ingrese agenda" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                                  <div class="mb-3 space-y-2 w-full">
-                                    <label class="text-gray-700 select-none font-medium py-2">Agenda</label>
+                                    <label class="text-gray-700 select-none font-medium py-2">hora entrada</label>
                                     <input v-model="nombre" placeholder="Ingrese agenda" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                                  <div class="mb-3 space-y-2 w-full">
-                                    <label class="text-gray-700 select-none font-medium py-2">Agenda</label>
+                                    <label class="text-gray-700 select-none font-medium py-2">Hora salida</label>
                                     <input v-model="nombre" placeholder="Ingrese agenda" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
@@ -158,63 +173,274 @@ export default defineComponent({
   components: {
     AppLayout
   },
+
+  
    data() {
     return {
       modal: true,
       titulo:"",
       tpAccion:1,//1 guardar 0 actualizar
+      nombres:"",
+      apellido:"",
+      identificacion:"",
+      telefono:"",
+      email:"",
+      arrayDatos:[],
+      arrayDetalleSeguimiento:[],
+      mensaje:"",
+      idEmpleado:""
     };
   },
-  methods: {
-    demo(){
-        alert("Hola munod voy a editar");
-    },
-    abrirModal(){
-      this.titulo = "Nuevo Registro"
-      this.modal = true;
-    },    
-    actualizar(){
-      this.modal = true;
-      this.tpAccion=0;
-      this.titulo = "Actualizar Registro"
-    },
-    eliminar(){
-      this.tpAccion=2;
-    },
-    cerrarModal(){
-      this.modal = false;
-    },
-    confirmar(){
-      this.tpAccion=0;
-    }
+   methods:
+        {
+            toggleTabs: function(tabNumber)
+            {
+               
+            },
+            registrarPedido()
+            {
+                let me =this;
+                var url ="/api/order/registrar";
+                axios.post(url, 
+                {
+                    id_employee:this.idEmpleado,
+                    deliveryDate:this.fecEntrega,
+                    delivAdrress:this.direccionEntrega,
+                    idCalendar:this.idAgenda,
+                    receiveName:this.recibe,
+                    receivePhone:this.telefonoRecibe,
+                    vlrTotal:this.sumar,
+                    state:this.edo,
+                    message:this.mensaje,
+                    data:this.arrayDetallePedido
+                })
+                .then(function(response)
+                {
+                    me.listarDatos();
+                    me.cerrarModal();
+                    me.xmensaje('Registro creado!!','El registro se creo correctamente.','success');
+                })
+                .catch(function(error) 
+                {
+                    me.xmensaje('Error al crear Registro!!',error.message,'error');
+                });
 
-},
-  props: ['Emp'],
-}
-);
+            },
+            listarDatos()
+            {
+                let me=this;
+                var url="/api/order/index2";
 
+                axios.get(url)
+                .then(function(response){
+                    var respuesta=response.data;
+                    me.arrayDatos=respuesta.orders;
+                })
+                .catch(function(error){
+                })
+            },
+            listarTipoDoc()
+            {
+                let me=this;
+                var url="/api/tipodoc/getdata";
+
+                axios.get(url)
+                .then(function(response){
+                    var respuesta=response.data;
+                    me.arrayTipoDoc=respuesta.consulta;
+                })
+                .catch(function(error){
+                })
+            },
+            datosCliente()
+            {
+                let me=this;
+                me.idCliente="";
+                me.nombres = "";
+                me.apellidos = "";
+                me.telefono = "";
+                me.direccion = "";
+                me.email = "";
+
+                var url="/api/user/getdata?tipoBuscar="+ this.idTipoDoc + "&numBuscar=" + this.numdoc;
+
+                axios.get(url)
+                .then(function(response){
+                    var respuesta=response.data;
+                    me.arrayDatosUsu=respuesta.usuarios;
+                    me.idCliente=respuesta.usuarios[0]['id'];
+                    me.nombres = respuesta.usuarios[0]['names'];
+                    me.apellidos = respuesta.usuarios[0]['surnames'];
+                    me.telefono = respuesta.usuarios[0]['phone'];
+                    me.direccion = respuesta.usuarios[0]['address'];
+                    me.email = respuesta.usuarios[0]['email'];
+                })
+                .catch(function(error){
+                })
+            },
+          
+    
+            abrirModal()
+            {
+                let me=this;
+                this.titulo = "Registrar Pedido"
+                this.modal = true;
+                me.limpiar();
+                this.tpAccion=0;
+                this.nombre="";
+                this.openTab=1;
+            },
+            limpiar()
+            {
+                this.idUsuario="";
+                this.idTipoDoc="";
+                this.numdoc="";
+                this.nombres="";                
+                this.apellidos="";                
+                this.telefono="";
+                this.email="";
+                this.direccion="";
+                this.idPedido="";
+                this.arrayDetallePedido=[];
+                this.idProducto="";
+                this.cantidad="";
+                this.valor="";
+                this.fecEntrega="";
+                this.idAgenda="";
+                this.recibe="";
+                this.telefonoRecibe="";
+                this.direccionEntrega="";
+                this.mensaje="";
+            },    
+            cerrarModal()
+            {
+                this.modal = false;
+            },          
+            ver(data=[])
+            {
+                this.idPedido=data['id'];
+                this.getDetallePedido();
+                this.fecha=data['order_date'];
+                this.idCliente=data['id_client'];
+                this.idTipoDoc=data['type_doc'];
+                this.numdoc=data['doc_num'];
+                this.datosCliente();             
+                this.fecEntrega=data['delivery_date'];
+                this.idAgenda=data['id_calendar'];
+                this.recibe=data['receive_name'];
+                this.telefonoRecibe=data['receive_phone'];
+                this.direccionEntrega=data['deliv_adrress'];
+
+                this.mensaje=data['message'];
+                this.modal = true;
+                this.tpAccion=-1;
+                this.titulo = "Ver Pedido Nro. ";
+                this.openTab=1; 
+            },
+            getValorProducto()
+            {
+                let me=this;
+                var url="/api/producto/getdata?idBuscar=" + this.idProducto;
+
+                axios.get(url)
+                .then(function(response){
+                    var respuesta=response.data;
+                    me.arrayDetalleProducto=respuesta.consulta;
+                    me.valor=me.arrayDetalleProducto[0]['price'];
+                    me.cantidad=1;
+                })
+                .catch(function(error){
+                })
+            },
+            agregarDetalleProd()
+            {
+                var total=this.cantidad*this.arrayDetalleProducto[0]['price'];
+                this.arrayDetallePedido.push({id_detail:"",
+                                              id_order:"",
+                                              product_code:this.arrayDetalleProducto[0]['id'],
+                                              name:this.arrayDetalleProducto[0]['name'],
+                                              units:this.cantidad,
+                                              unit_price:this.arrayDetalleProducto[0]['price'],
+                                              total:total});
+                this.idProducto="";
+                this.cantidad=0;
+                this.valor=0;
+            },
+            getDetallePedido()
+            {
+                var arrayDetPed=[];
+                let me=this;
+                var url="/api/detalle/getdata?idBuscar=" + this.idPedido;
+
+                axios.get(url)
+                .then(function(response){
+                    var respuesta=response.data;
+                    me.arrayDetallePedido=respuesta.consulta;
+                })
+                .catch(function(error){
+                })                
+            },
+            eliminarDetalle(index)
+            {
+                alert("Eliminar Detalle");
+                 this.arrayDetallePedido.splice(index,1);
+            },
+            xmensaje(head, body, button)
+            {
+                Swal.fire(
+                    head,
+                    body,
+                    button
+                )            
+            } 
+        },
+        computed: {
+            sumar:function()
+            {
+                var sumar=0;
+                for(var i=0;i<this.arrayDetallePedido.length;i++)
+                {
+                    sumar+= parseInt(this.arrayDetallePedido[i].total);
+                }
+                return sumar;
+
+            }
+
+        },
+        mounted()
+        {
+            this.listarDatos();
+            this.listarTipoDoc();
+            this.listarProductos();
+            this.listarAgenda();
+        }                
+    })
 </script>
-<style>
 
-.table {
-  border-spacing: 0 15px;
-}
 
-i {
-  font-size: 1rem !important;
-}
 
-.table tr {
-  border-radius: 20px;
-}
 
-tr td:nth-child(n + 5),
-tr th:nth-child(n + 5) {
-  border-radius: 0 0.625rem 0.625rem 0;
-}
 
-tr td:nth-child(1),
-tr th:nth-child(1) {
-  border-radius: 0.625rem 0 0 0.625rem;
-}
-</style>
+
+
+
+
+
+
+
+ $Fol->id_employee = $request->id_employee;
+             $Fol->Name = $request->Name;
+             $Fol->Surnames = $request->Surnames;
+             $Fol->Ident_Card = $request->Ident_Card;
+             $Fol->Phone = $request->Phone;
+             $Fol->Mail = $request->Mail;
+
+
+
+
+               $detDetails->id_Follows=$Fol->id;
+                 $detDetails->Date = $date;
+                 $detDetails->Turn=$detail['Turn'];
+                 $detDetails->Time_Entry=$detail['Time_Entry'];
+                 $detDetails->Time_Departure=$detail['Time_Departure'];
+                 $detDetails->Observation=$detail['Observation'];
